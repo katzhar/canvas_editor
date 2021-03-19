@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    padding: 30px;
+    background:#262626;
+}
+
+.tools {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+.tools .button {
+    width: 60px;
+    height: 40px;
+    cursor: pointer;
+    margin: 10px 10px 10px 0;
+}
+
+.color-picker {
+    height: 30px;
+    width: 30px;
+    margin: 0 15px;
+}
+
+.pen-range {
+    margin: 0 15px;
+    width: 70px;
+}
