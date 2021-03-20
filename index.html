@@ -5,19 +5,51 @@
     <meta charset='UTF-8'>
     <title>Canvas editor for Tilda</title>
     <link rel='stylesheet' href='style.css'>
-    <script src='index.js' defer></script>
+    <script src='index.js' src='https://kit.fontawesome.com/a076d05399.js' defer></script>
 </head>
 
 <body>
+
     <div class='field'>
-
-        <div class='tools'>
-            <button onClick='clear_canvas()' type='button' class='button'>Clear</button>
-
-            <input onInput='draw_color = this.value' type='color' class='color-picker' id='color'>
-            <input onInput='draw_width = this.value' type='range' min='1' max='100' class='pen-range'>
-        </div>
         <canvas id='canvas'></canvas>
+        <div class='icons'>
+            <div class='panel'>
+                <input onInput='draw_color = this.value' type='color' class='color-picker' id='color'>
+                <input onInput='draw_width = this.value' type='range' min='1' max='100' class='range'>
+
+                <div class='tools'>
+                    <p class='img'><img onClick='localStorage.setItem("shape", "random")'
+                            src='https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/blue_dark_grey/64x64/plain/brush.png'></img>
+                    </p>
+                    <p class='img'><img onClick='localStorage.setItem("shape", "line")'
+                            src='https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/blue_dark_grey/64x64/plain/vector_line.png'></img>
+                    </p>
+                    <p class='img'><img onClick='localStorage.setItem("shape", "circle")'
+                            src='https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/blue_dark_grey/64x64/plain/shape_circle.png'></img>
+                    </p>
+                    <p class='img'><img onClick='localStorage.setItem("shape", "polygon")'
+                            src='https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/blue_dark_grey/64x64/plain/shape_hexagon.png'></img>
+                    </p>
+                    <p class='img'><img onClick='localStorage.setItem("pointer", "true")'
+                            src='https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/blue_dark_grey/64x64/plain/hand_touch.png'></img>
+                    </p>
+                </div>
+
+                <div class='text'>
+                    <label class="container">Fill
+                        <input id='fillBox' type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+
+                    <p class='polygonSides'><label>Polygon Sides: <input class='range' id='polygonSides' type='range'
+                                step='1' min='3' max='10'></label></p>
+                </div>
+            </div>
+            <div class='trashIcon'>
+                <img onClick='clear_canvas()'
+                    src='https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/blue_dark_grey/64x64/plain/garbage_can.png'></img>
+            </div>
+        </div>
     </div>
 </body>
 
