@@ -5,23 +5,23 @@
     <meta charset='UTF-8'>
     <title>Canvas editor for Tilda</title>
     <link rel='stylesheet' href='style.css'>
-    <script src='index.js' src='https://kit.fontawesome.com/a076d05399.js' defer></script>
+    <script src='index.js' defer></script>
 </head>
 
 <body>
 
     <div class='field'>
         <canvas id='canvas'></canvas>
-        <div class='icons'>
-            <div class='panel'>
-                <input onInput='draw_color = this.value' type='color' class='color-picker' id='color'>
-                <input onInput='draw_width = this.value' type='range' min='1' max='100' class='range'>
+        <div class='panel'>
+            <div class='icons'>
+                <input onInput='drawColor = this.value' type='color' class='color-picker' id='color'>
+                <input onInput='drawWidth = this.value' type='range' min='1' max='100' class='range'>
 
                 <div class='tools'>
                     <p class='img'><img onClick='localStorage.setItem("shape", "random")'
                             src='https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/blue_dark_grey/64x64/plain/brush.png'></img>
                     </p>
-                    <p class='img'><img onClick='localStorage.setItem("shape", "line")'
+                    <p class='img'><img onClick='localStorage.setItem("shape", "curve")'
                             src='https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/blue_dark_grey/64x64/plain/vector_line.png'></img>
                     </p>
                     <p class='img'><img onClick='localStorage.setItem("shape", "circle")'
@@ -30,7 +30,7 @@
                     <p class='img'><img onClick='localStorage.setItem("shape", "polygon")'
                             src='https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/blue_dark_grey/64x64/plain/shape_hexagon.png'></img>
                     </p>
-                    <p class='img'><img onClick='localStorage.setItem("pointer", "true")'
+                    <p class='img'><img onClick='localStorage.setItem("shape", "dragndrop")'
                             src='https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/blue_dark_grey/64x64/plain/hand_touch.png'></img>
                     </p>
                 </div>
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class='trashIcon'>
-                <img onClick='clear_canvas()'
+                <img onClick='onClear()'
                     src='https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/blue_dark_grey/64x64/plain/garbage_can.png'></img>
             </div>
         </div>

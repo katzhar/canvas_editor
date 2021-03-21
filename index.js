@@ -1,14 +1,15 @@
 let canvas,
     context,
     is_drawing = false,
-    draw_color = 'black',
-    draw_width = '20',
+    drawColor = 'black',
+    drawWidth = '10',
     dragStartLocation,
-    snapshot;
+    snapshot,
+    bezierCoords = [];
 
 canvas = document.getElementById('canvas');
-canvas.width = window.innerWidth - 60,
-    canvas.height = 500;
+canvas.width = 850;
+canvas.height = 500;
 context = canvas.getContext('2d');
 context.fillStyle = 'white';
 
@@ -17,8 +18,8 @@ context.lineWidth = 4;
 context.lineCap = 'round';
 
 const getCanvasCoordinates = (event) => {
-    var x = event.clientX - canvas.getBoundingClientRect().left,
-        y = event.clientY - canvas.getBoundingClientRect().top;
+    var x = event.clientX,
+        y = event.clientY;
     return { x: x, y: y };
 }
 
@@ -32,8 +33,8 @@ const restoreSnapshot = () => {
 
 const start = (event) => {
     is_drawing = true;
-    context.strokeStyle = draw_color;
-    context.lineWidth = draw_width;
+    context.strokeStyle = drawColor;
+    context.lineWidth = drawWidth;
     context.beginPath();
     context.moveTo(event.clientX, event.clientY);
     dragStartLocation = getCanvasCoordinates(event);
@@ -42,62 +43,61 @@ const start = (event) => {
 }
 
 const drag = (event) => {
-    let position;
     if (is_drawing === true) {
         restoreSnapshot();
-        position = getCanvasCoordinates(event);
-        drawShapes(position);
+        currentPosition = getCanvasCoordinates(event);
+        drawShapes(currentPosition);
     }
 }
 
-const drawShapes = (position) => {
+const drawShapes = (currentPosition) => {
     let shape = localStorage.getItem('shape');
-    let fillBox = document.getElementById('fillBox');
+    fillBox = document.getElementById('fillBox');
     if (shape === 'random') {
-        drawRandom(position);
+        drawRandomLine(currentPosition);
     }
     if (shape === 'circle') {
-        drawCircle(position);
+        drawCircle(currentPosition);
     }
-    if (shape === 'line') {
-        drawLine(position);
+    if (shape === 'curve') {
+        drawBezierCurve(currentPosition);
     }
     if (shape === 'polygon') {
-        drawPolygon(position);
+        drawPolygon(currentPosition);
     }
     if (fillBox.checked && shape !== 'random') {
-        context.fillStyle = draw_color
+        context.fillStyle = drawColor;
         context.fill();
     } else {
         context.stroke();
     }
 }
 
-const drawRandom = (position) => {
+const drawRandomLine = (currentPosition) => {
     context.lineCap = 'round';
     context.lineJoin = 'round';
-    context.lineTo(position.x, position.y);
+    context.lineTo(currentPosition.x, currentPosition.y);
     context.stroke();
 }
 
-const drawLine = (position) => {
+const drawBezierCurve = (currentPosition) => {
     context.beginPath();
     context.moveTo(dragStartLocation.x, dragStartLocation.y);
-    context.lineTo(position.x, position.y);
+    context.quadraticCurveTo(dragStartLocation.x - 100, dragStartLocation.y - 100, currentPosition.x, currentPosition.y);
     context.stroke();
 }
 
-const drawCircle = (position) => {
-    var radius = Math.sqrt(Math.pow((dragStartLocation.x - position.x), 2) + Math.pow((dragStartLocation.y - position.y), 2));
+const drawCircle = (currentPosition) => {
+    var radius = Math.sqrt(Math.pow((dragStartLocation.x - currentPosition.x), 2) + Math.pow((dragStartLocation.y - currentPosition.y), 2));
     context.beginPath();
     context.arc(dragStartLocation.x, dragStartLocation.y, radius, 0, 2 * Math.PI, false);
 }
 
-const drawPolygon = (position) => {
+const drawPolygon = (currentPosition) => {
     let angle = Math.PI / 4;
     let sides = document.getElementById('polygonSides').value;
     let coordinates = [],
-        radius = Math.sqrt(Math.pow((dragStartLocation.x - position.x), 2) + Math.pow((dragStartLocation.y - position.y), 2)),
+        radius = Math.sqrt(Math.pow((dragStartLocation.x - currentPosition.x), 2) + Math.pow((dragStartLocation.y - currentPosition.y), 2)),
         index = 0;
     for (index = 0; index < sides; index++) {
         coordinates.push({ x: dragStartLocation.x + radius * Math.cos(angle), y: dragStartLocation.y - radius * Math.sin(angle) });
@@ -120,15 +120,28 @@ const stop = (event) => {
     event.preventDefault();
 }
 
-const change_color = (elem) => {
-    context.strokeStyle = elem.style.background;
-}
-
-const clear_canvas = () => {
+const onClear = () => {
     context.fillStyle = 'white';
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillRect(0, 0, canvas.width, canvas.height);
 }
+
+document.addEventListener('keydown', onKeyDown = (e) => {
+    if (e.keyCode === 49) {
+        localStorage.setItem("shape", "random")
+    } if (e.keyCode === 50) {
+        localStorage.setItem("shape", "curve")
+    } if (e.keyCode === 51) {
+        localStorage.setItem("shape", "circle")
+    } if (e.keyCode === 52) {
+        localStorage.setItem("shape", "polygon")
+    } if (e.keyCode === 53) {
+        localStorage.setItem("shape", "dragndrop")
+    } if (e.keyCode === 67) {
+        onClear();
+    }
+    drag();
+})
 
 canvas.addEventListener('mousedown', start, false);
 canvas.addEventListener('mousemove', drag, false);

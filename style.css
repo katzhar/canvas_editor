@@ -3,15 +3,14 @@ body {
     font-family: 'Courier New', Courier, monospace;
 }
 
-.icons {
+.panel {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-right: 40px;
     height: 70px;
 }
 
-.panel {
+.icons {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -40,25 +39,27 @@ img {
 }
 
 .trashIcon :hover {
-    height: 50px;
-    width: 50px;
+    height: 45px;
+    width: 45px;
 } 
 
 .img :hover {
-    height: 50px;
-    width: 50px;
+    height: 45px;
+    width: 45px;
 }
+
 .text {
     display: flex;
     flex-direction: column;
     color: white;
     margin-top: 10px;
     cursor: pointer;
-    font-size: 17px;
+    font-size: 12px;
 }
 
-p {
-    margin-top: 10px;
+.polygonSides {
+  display: flex;
+  align-items: center;
 }
 
 .cursor {
@@ -70,29 +71,29 @@ p {
     position: relative;
     padding-left: 35px;
     cursor: pointer;
-    font-size: 17px;
+    font-size: 12px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-  }
+}
   
-  .container input {
+.container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
     height: 0;
     width: 0;
-  }
+}
   
-  .checkmark {
+.checkmark {
     position: absolute;
     top: 0;
     left: 0;
     height: 16px;
     width: 16px;
     background-color: #eee;
-  }
+}
 
 .container:hover input ~ .checkmark {
   background-color: #ccc;
